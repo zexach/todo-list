@@ -9,6 +9,8 @@
 }
 
 .todo-container{
+  width: 500px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
