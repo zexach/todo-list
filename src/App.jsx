@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Task from './Task'
+import AddTask from './AddTask'
 import './App.css'
 
 const dummy_data = [
@@ -19,12 +20,13 @@ const dummy_data = [
         id: 3,
         title: 'Become a CEO of Klika',
         description: 'It is what it is'
-    }
+    },
 ]
 
 function App() {
 
     const [tasks, setTasks] = useState(dummy_data);
+    const [addTaskModal, setAddTaskModal] = useState(false);
 
     const handleDeleteClick = (id) => {
         console.log(id);
@@ -38,13 +40,26 @@ function App() {
             id: Math.random().toString(),
             ...editedTask
         }
-        console.log(editedTask);
 
         const tempTasks = [...tasks];
         tempTasks[id-1] = tempTask;
 
         setTasks(tempTasks);
+    }
 
+    const handleAddTaskClick = () => {
+        setAddTaskModal(!addTaskModal);
+    }
+    
+    const handleNewTask = (task) => {
+        const tempTask = {
+            id: Math.random().toString(),
+            ...task
+        }
+
+        setTasks((prevTasks) => {return [...prevTasks, tempTask]});
+
+        setAddTaskModal(!addTaskModal);
     }
 
     return (
@@ -59,7 +74,10 @@ function App() {
                     description={task.description}
                     onSaveButtonClick={handleSaveClick}
                     onDeleteButtonClick={handleDeleteClick} /> )}
-            <button className="add-btn">Add task</button>
+            <button onClick={handleAddTaskClick} className="add-btn">Add task</button>
+            {!addTaskModal ? '' : 
+            <AddTask onSubmitClick={handleNewTask} />
+            }
         </div>
     )
 }
