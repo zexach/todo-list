@@ -1,0 +1,50 @@
+.single-task{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+.left-content{
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+}
+
+h4{
+    margin: 0.5rem 0;
+}
+
+p{
+    margin: 0;
+}
+
+.right-content{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-btn{
+    color: white;
+    background-color: rgb(68, 159, 220);
+    transition: 0.2s;
+}
+
+.delete-btn{
+    color: white;
+    background-color: rgb(253, 89, 89);
+    transition: 0.2s;
+}
+
+button:hover{
+    border-color: transparent;
+}
+
+.edit-btn:hover{
+    background-color: rgb(57, 135, 186);  
+}
+
+
+.delete-btn:hover{
+    background-color: rgb(233, 79, 79);
+}

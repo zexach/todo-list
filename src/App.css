@@ -1,0 +1,32 @@
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+  background-color: rgb(239, 239, 239);
+  box-shadow: 2px 1px 21px -8px rgba(0,0,0,0.3);
+}
+
+h2{
+  align-self: center;
+}
+
+.add-btn{
+  background-color: rgb(96, 245, 76);
+  transition: 0.2s;
+}
+
+.add-btn:hover{
+  background-color: rgb(92, 226, 74);
+}
