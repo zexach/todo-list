@@ -35,9 +35,8 @@ function App() {
     }
 
     const handleSaveClick = (id, editedTask) => {
-        console.log(id);
         const tempTask = {
-            id: Math.random().toString(),
+            id: id,
             ...editedTask
         }
 
@@ -53,7 +52,7 @@ function App() {
     
     const handleNewTask = (task) => {
         const tempTask = {
-            id: Math.random().toString(),
+            id: tasks.length+1,
             ...task
         }
 
