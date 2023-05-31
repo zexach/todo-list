@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import './Task.css';
+import './style/Task.css';
 
 const Task = (props) => {
 
@@ -58,8 +58,7 @@ const Task = (props) => {
                     <button onClick={handleSaveClick} className="edit-btn">Save</button>
                 </div>
             </div> 
-            }
-            
+            }       
         </div>
     );
 }

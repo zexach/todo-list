@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Task from './Task'
 import AddTask from './AddTask'
-import './App.css'
+import './style/App.css'
 
 const dummy_data = [
     {
