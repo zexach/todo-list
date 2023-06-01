@@ -23,6 +23,8 @@ const Task = (props) => {
             description: description
         }
 
+        console.log(props.id);
+
         props.onSaveButtonClick(props.id, editedTask);
 
         setEditMode(!editMode);

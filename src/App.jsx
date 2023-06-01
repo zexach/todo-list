@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import Task from './Task'
 import AddTask from './AddTask'
 import './style/App.css'
@@ -71,16 +69,28 @@ function App() {
         setTasks(tasks.filter(task => task.id !== id));
     }
 
-    const handleSaveClick = (id, editedTask) => {
+    const updateTodo = async(id, editedTask) => {
         const tempTask = {
             id: id,
-            ...editedTask
+            ...editedTask,
+            createdAt: new Date()
         }
 
         const tempTasks = [...tasks];
-        tempTasks[id-1] = tempTask;
 
-        setTasks(tempTasks);
+        const targetTodo = (todo) => todo.id === id;
+        const targetIndex = tempTasks.findIndex(targetTodo);
+
+        tempTasks[targetIndex] = tempTask;
+
+        try{
+            const response = await axios.put(`http://localhost:8090/api/v1/todos/${id}`, tempTask);
+            console.log(response.data);
+            setTasks(tempTasks);
+        }catch(e){
+            console.log(e);
+        }
+
     }
 
     const handleAddTaskClick = () => {
@@ -97,7 +107,7 @@ function App() {
                     id={task.id} 
                     title={task.title} 
                     description={task.description}
-                    onSaveButtonClick={handleSaveClick}
+                    onSaveButtonClick={updateTodo}
                     onDeleteButtonClick={deleteTodo} /> )}
             <button onClick={handleAddTaskClick} className="add-btn">Add task</button>
             {!addTaskModal ? '' : 
