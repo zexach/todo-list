@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Task from './Task'
 import AddTask from './AddTask'
 import './style/App.css'
+import axios from 'axios'
 
 const dummy_data = [
     {
@@ -25,11 +26,47 @@ const dummy_data = [
 
 function App() {
 
-    const [tasks, setTasks] = useState(dummy_data);
+
+    const [tasks, setTasks] = useState([]);
     const [addTaskModal, setAddTaskModal] = useState(false);
 
-    const handleDeleteClick = (id) => {
-        console.log(id);
+    const getTodos = async () => {
+        try{
+            const response = await axios.get('http://localhost:8090/api/v1/todos');
+            setTasks(response.data);
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const addTodo = async(task) => {
+        const tempTask = {
+            ...task,
+            'createdAt': new Date()
+        }
+
+        try{
+            const response = await axios.post('http://localhost:8090/api/v1/todos', tempTask);
+        }catch(e){
+            console.log(e);
+        }
+
+        setTasks((prevTasks) => {return [...prevTasks, tempTask]});
+        setAddTaskModal(!addTaskModal);
+    }
+
+    useEffect(() => {
+        getTodos();
+    }, [])
+
+    const deleteTodo = async(id) => {
+
+        try{
+            const response = await axios.delete(`http://localhost:8090/api/v1/todos/${id}`);
+            console.log(response.data);
+        }catch(e){
+            console.log(e);
+        }
 
         setTasks(tasks.filter(task => task.id !== id));
     }
@@ -49,17 +86,6 @@ function App() {
     const handleAddTaskClick = () => {
         setAddTaskModal(!addTaskModal);
     }
-    
-    const handleNewTask = (task) => {
-        const tempTask = {
-            id: tasks.length+1,
-            ...task
-        }
-
-        setTasks((prevTasks) => {return [...prevTasks, tempTask]});
-
-        setAddTaskModal(!addTaskModal);
-    }
 
     return (
         <div className="todo-container">
@@ -72,10 +98,10 @@ function App() {
                     title={task.title} 
                     description={task.description}
                     onSaveButtonClick={handleSaveClick}
-                    onDeleteButtonClick={handleDeleteClick} /> )}
+                    onDeleteButtonClick={deleteTodo} /> )}
             <button onClick={handleAddTaskClick} className="add-btn">Add task</button>
             {!addTaskModal ? '' : 
-            <AddTask onSubmitClick={handleNewTask} />
+            <AddTask onSubmitClick={addTodo} />
             }
         </div>
     )
